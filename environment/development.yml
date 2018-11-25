@@ -1,0 +1,42 @@
+version: '2'
+services:
+  nginx:
+    image: 'bitnami/nginx:latest'
+    container_name: 'docker_php_mysql_nginx'
+    links:
+      - phpfpm
+    depends_on:
+      - phpfpm
+    networks:
+      - docker-php-mysql-tier
+    ports:
+      - '8081:8081'
+    volumes:
+      - ../nginx/vhost.conf:/opt/bitnami/nginx/conf/vhosts/yourapp.conf
+      - ../source:/var/www
+
+  phpfpm:
+    image: 'bitnami/php-fpm:latest'
+    container_name: 'docker_php_mysql_php'
+    networks:
+      - docker-php-mysql-tier
+    links:
+      - db
+    volumes:
+      - ../source:/app
+  db:
+    image: 'mysql'
+    container_name: 'docker_php_mysql_mysql'
+    ports: 
+      - '3306:3306'
+    networks:
+      - docker-php-mysql-tier
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: estuff
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 8t1WorVb9aAu
+
+networks:
+  docker-php-mysql-tier:
+    driver: bridge
