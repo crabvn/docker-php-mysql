@@ -19,5 +19,5 @@ Access http://localhost:8081
 * `make provision up` start containers then install the packages
 * `make artsian` php artisan do setup. Check the Makefile for detail
 
-# Start your own project
+## Start your own project
 Copy your project folders to source folder. That's it! Enjoy your PHP project
