@@ -1,42 +1,31 @@
-version: '2'
+version: '3'
 services:
   nginx:
-    image: 'bitnami/nginx:latest'
-    container_name: 'docker_php_mysql_nginx'
-    links:
-      - phpfpm
-    depends_on:
-      - phpfpm
-    networks:
-      - docker-php-mysql-tier
+    image: nginx:latest
     ports:
-      - '8081:8081'
+      - "8080:8080"
     volumes:
-      - ../nginx/vhost.conf:/opt/bitnami/nginx/conf/vhosts/yourapp.conf
-      - ../source:/var/www
+      - ../environment/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ../src:/var/www/html
+    depends_on:
+      - php
 
-  phpfpm:
-    image: 'bitnami/php-fpm:latest'
-    container_name: 'docker_php_mysql_php'
-    networks:
-      - docker-php-mysql-tier
-    links:
-      - db
+  php:
+    build:
+      context: ../
+      dockerfile: Dockerfile
     volumes:
-      - ../source:/app
-  db:
-    image: 'mysql'
-    container_name: 'docker_php_mysql_mysql'
-    ports: 
-      - '3306:3306'
-    networks:
-      - docker-php-mysql-tier
+      - ../src:/var/www/html
+
+  mysql:
+    image: mysql:8.0
     environment:
-      MYSQL_ROOT_PASSWORD: secret
-      MYSQL_DATABASE: estuff
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: 8t1WorVb9aAu
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: lumen
+      MYSQL_USER: lumenuser
+      MYSQL_PASSWORD: lumenpassword
+    volumes:
+      - mysql_data:/var/lib/mysql
 
-networks:
-  docker-php-mysql-tier:
-    driver: bridge
+volumes:
+  mysql_data:
