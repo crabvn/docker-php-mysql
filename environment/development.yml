@@ -25,9 +25,9 @@ services:
     container_name: x-mysql
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: lumen
-      MYSQL_USER: lumenuser
-      MYSQL_PASSWORD: lumenpassword
+      MYSQL_DATABASE: mysql
+      MYSQL_USER: adminuser
+      MYSQL_PASSWORD: adminpassword
     volumes:
       - mysql_data:/var/lib/mysql
 
