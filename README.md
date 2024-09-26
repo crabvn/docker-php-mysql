@@ -8,15 +8,15 @@
 ### Run
 `make up`
 
-Access http://localhost:8081
+Access http://localhost:8080
 
 ## List **make** command:
 * `make up` stop then start containers
 * `make down` stop then remove containers
-* `make stop` stop app
-* `make start` start app
 * `make php-bash-login` login to php container 
 * `make provision up` start containers then install the packages
 
 ## Start your own project
-Copy your project folders to source folder. That's it! Enjoy your PHP project
+Copy your project folders to source folder OR access to docker container and run the project setup commands. 
+
+That's it! Enjoy PHP project with Docker.
